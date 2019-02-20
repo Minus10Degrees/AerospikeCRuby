@@ -56,7 +56,7 @@ describe AerospikeC::Record do
   end
 
   it "#ttl sets new ttl" do
-    # @rec.ttl = 60
-    # expect(@rec.ttl).to eq(60)
+    @rec.ttl = 60
+    expect(@rec.ttl).to eq(60)
   end
 end

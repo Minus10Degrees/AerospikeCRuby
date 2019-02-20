@@ -56,7 +56,9 @@ static void client_initialize(int argc, VALUE * argv, VALUE self) {
 
   as_error err;
   if (aerospike_connect(as, &err) != AEROSPIKE_OK) {
-    aerospike_destroy(as);
+    // this causes segmentation faults
+    // because it deallocates again in client_deallocate();
+    // aerospike_destroy(as);
     raise_as_error(err);
   }
 

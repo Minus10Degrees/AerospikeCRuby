@@ -37,4 +37,4 @@ unless find_header("aerospike/aerospike.h")
 end
 
 
-create_makefile("aerospike_c_ruby/aerospike_c_ruby.so")
+create_makefile("aerospike_c_ruby/aerospike_c_ruby")
