@@ -37,6 +37,57 @@ void predexp_2_as_predexp(VALUE self, as_predexp_array *a) {
   }
 }
 
+void insert_integer_predicate(as_predexp_array *a, VALUE val) {
+  if (val == predexp_equal_sym) {
+    insert_as_predexp_array(a, as_predexp_integer_equal());
+  } else if(val == predexp_unequal_sym) {
+    insert_as_predexp_array(a, as_predexp_integer_unequal());
+  } else if(val == predexp_greater_sym) {
+    insert_as_predexp_array(a, as_predexp_integer_greater());
+  } else if(val == predexp_greatereq_sym) {
+    insert_as_predexp_array(a, as_predexp_integer_greatereq());
+  } else if(val == predexp_less_sym) {
+    insert_as_predexp_array(a, as_predexp_integer_less());
+  } else if(val == predexp_lesseq_sym) {
+    insert_as_predexp_array(a, as_predexp_integer_lesseq());
+  } else {
+    raise_parse_error();
+  }
+}
+
+void insert_collection_predicate(as_predexp_array *a, VALUE bin, VALUE collection, VALUE collection_pred, VALUE node_collection_var) {
+  if(collection == predexp_array_sym) {
+    insert_as_predexp_array(a, as_predexp_list_bin(bin));
+    if (collection_pred == predexp_or_sym) {
+      insert_as_predexp_array(a, as_predexp_list_iterate_or(node_collection_var));
+    } else if (collection_pred == predexp_and_sym) {
+      insert_as_predexp_array(a, as_predexp_list_iterate_and(node_collection_var));
+    } else {
+      raise_parse_error();
+    }
+  } else if(collection == predexp_map_key_sym) {
+    insert_as_predexp_array(a, as_predexp_map_bin(bin));
+    if (collection_pred == predexp_or_sym) {
+      insert_as_predexp_array(a, as_predexp_mapkey_iterate_or(node_collection_var));
+    } else if (collection_pred == predexp_and_sym) {
+      insert_as_predexp_array(a, as_predexp_mapkey_iterate_and(node_collection_var));
+    } else {
+      raise_parse_error();
+    }
+  } else if(collection == predexp_map_val_sym) {
+    insert_as_predexp_array(a, as_predexp_map_bin(bin));
+    if (collection_pred == predexp_or_sym) {
+      insert_as_predexp_array(a, as_predexp_mapval_iterate_or(node_collection_var));
+    } else if (collection_pred == predexp_and_sym) {
+      insert_as_predexp_array(a, as_predexp_mapval_iterate_and(node_collection_var));
+    } else {
+      raise_parse_error();
+    }
+  } else {
+    raise_parse_error();
+  }
+}
+
 void predexp_node_2_as_predexp(as_predexp_array *a, VALUE node) {
   check_hash(node);
 
@@ -205,57 +256,6 @@ void push_2_as_predexp(as_predexp_array *a, VALUE node_bin, VALUE node_true, VAL
 
   if(node_true == Qfalse) {
     insert_as_predexp_array(a, as_predexp_not(1));
-  }
-}
-
-void insert_integer_predicate(as_predexp_array *a, VALUE val) {
-  if (val == predexp_equal_sym) {
-    insert_as_predexp_array(a, as_predexp_integer_equal());
-  } else if(val == predexp_unequal_sym) {
-    insert_as_predexp_array(a, as_predexp_integer_unequal());
-  } else if(val == predexp_greater_sym) {
-    insert_as_predexp_array(a, as_predexp_integer_greater());
-  } else if(val == predexp_greatereq_sym) {
-    insert_as_predexp_array(a, as_predexp_integer_greatereq());
-  } else if(val == predexp_less_sym) {
-    insert_as_predexp_array(a, as_predexp_integer_less());
-  } else if(val == predexp_lesseq_sym) {
-    insert_as_predexp_array(a, as_predexp_integer_lesseq());
-  } else {
-    raise_parse_error();
-  }
-}
-
-void insert_collection_predicate(as_predexp_array *a, VALUE bin, VALUE collection, VALUE collection_pred, VALUE node_collection_var) {
-  if(collection == predexp_array_sym) {
-    insert_as_predexp_array(a, as_predexp_list_bin(bin));
-    if (collection_pred == predexp_or_sym) {
-      insert_as_predexp_array(a, as_predexp_list_iterate_or(node_collection_var));
-    } else if (collection_pred == predexp_and_sym) {
-      insert_as_predexp_array(a, as_predexp_list_iterate_and(node_collection_var));
-    } else {
-      raise_parse_error();
-    }
-  } else if(collection == predexp_map_key_sym) {
-    insert_as_predexp_array(a, as_predexp_map_bin(bin));
-    if (collection_pred == predexp_or_sym) {
-      insert_as_predexp_array(a, as_predexp_mapkey_iterate_or(node_collection_var));
-    } else if (collection_pred == predexp_and_sym) {
-      insert_as_predexp_array(a, as_predexp_mapkey_iterate_and(node_collection_var));
-    } else {
-      raise_parse_error();
-    }
-  } else if(collection == predexp_map_val_sym) {
-    insert_as_predexp_array(a, as_predexp_map_bin(bin));
-    if (collection_pred == predexp_or_sym) {
-      insert_as_predexp_array(a, as_predexp_mapval_iterate_or(node_collection_var));
-    } else if (collection_pred == predexp_and_sym) {
-      insert_as_predexp_array(a, as_predexp_mapval_iterate_and(node_collection_var));
-    } else {
-      raise_parse_error();
-    }
-  } else {
-    raise_parse_error();
   }
 }
 

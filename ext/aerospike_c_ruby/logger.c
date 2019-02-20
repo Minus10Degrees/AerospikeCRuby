@@ -18,7 +18,7 @@ bool rb_aero_log_callback(
 {
       VALUE logger = rb_funcall(rb_aero_AerospikeC, rb_intern("logger"), 0);
 
-  if ( TYPE(logger) != T_OBJECT ) return;
+  if ( TYPE(logger) != T_OBJECT ) return false;
 
     char msg[1024] = {0};
     va_list ap;
@@ -39,7 +39,7 @@ bool rb_aero_log_callback(
 bool rb_aero_logger(as_log_level level, struct timeval * tm, int args, ...) {
   VALUE logger = rb_funcall(rb_aero_AerospikeC, rb_intern("logger"), 0);
 
-  if ( TYPE(logger) != T_OBJECT ) return;
+  if ( TYPE(logger) != T_OBJECT ) return false;
 
   switch_color_code();
 

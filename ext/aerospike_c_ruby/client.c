@@ -10,7 +10,7 @@ VALUE rb_aero_Client;
 // Aerospike queries and scans callback runs in parallel
 // Better not touch ruby api inside threads...
 //
-pthread_mutex_t G_CALLBACK_MUTEX = PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP;
+pthread_mutex_t G_CALLBACK_MUTEX = PTHREAD_RECURSIVE_MUTEX_INITIALIZER;
 
 //
 // client allocate

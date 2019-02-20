@@ -420,7 +420,9 @@ describe AerospikeC::Client do
       # expect(@client.statistics).to include('total-bytes-disk')
       # expect(@client.statistics).to include('udf_read_success')
 
-      expect(@client.statistics).to include('batch_error')
+      # expect(@client.statistics).to include('batch_error')
+      # batch_error renamed to batch_index_error
+      expect(@client.statistics).to include('batch_index_error')
       expect(@client.statistics).to include('cluster_integrity')
     end
   end
