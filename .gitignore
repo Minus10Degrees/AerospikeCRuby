@@ -14,3 +14,4 @@
 /ext/aerospike_c_ruby/Makefile
 /ext/aerospike_c_ruby/*.o
 /lib/aerospike_c_ruby/aerospike_c_ruby.so
+/lib/aerospike_c_ruby/aerospike_c_ruby.bundle
